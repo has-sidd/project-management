@@ -16,8 +16,6 @@ const CreatePrompt = () => {
 	const { data: session } = useSession();
 	const [submitting, setSubmitting] = useState(false);
 
-	console.log(project);
-
 	const createProject = async (e) => {
 		e.preventDefault();
 		setSubmitting(true);

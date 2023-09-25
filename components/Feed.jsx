@@ -57,7 +57,9 @@ const Feed = ({ type }) => {
 						/>
 					</form>
 					{type != 'all' && (
-						<p className="desc text-center capitalize text-black">{type}</p>
+						<h2 className="mt-[20px] scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight transition-colors first:mt-0 uppercase">
+							{type} Projects
+						</h2>
 					)}
 
 					<ProjectCardList />

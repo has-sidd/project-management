@@ -2,12 +2,14 @@
 import { getProviders, signIn, signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Button } from './ui/button';
 const Nav = () => {
 	const { data: session } = useSession();
 	const [providers, setProviders] = useState(null);
 	const [toggleDropdown, setToggleDropdown] = useState(false);
+	const pathname = usePathname();
 
 	useEffect(() => {
 		const setUpProviders = async () => {
@@ -19,20 +21,35 @@ const Nav = () => {
 	return (
 		<nav className="flex-between w-full mb-16 pt-3">
 			<Link href="/" className="flex gap-2 flex-center">
+				<Image
+					width={50}
+					height={50}
+					alt="Promptopia Logo"
+					className="object-contain"
+					src="/assets/images/logo1.png"
+				/>
 				<p className="text-lg text-primary-orange">Projectory</p>
 			</Link>
 
 			{/* Desktop Nav */}
-			<div className="sm:flex hidden">
+			<div className="md:flex hidden">
 				{session?.user ? (
 					<div className="flex gap-3 md:gap-5">
 						<Link href={'/completed'}>
-							<Button className="bg-transparent text-black hover:text-white">
+							<Button
+								className={`bg-transparent text-black hover:text-white rounded-3xl ${
+									pathname === '/completed' && 'text-white bg-slate-900/90'
+								}`}
+							>
 								Completed
 							</Button>
 						</Link>
 						<Link href={'/archived'}>
-							<Button className="bg-transparent text-black hover:text-white">
+							<Button
+								className={`bg-transparent text-black hover:text-white rounded-3xl ${
+									pathname === '/archived' && 'text-white bg-slate-900/90'
+								}`}
+							>
 								Archived
 							</Button>
 						</Link>
@@ -80,7 +97,7 @@ const Nav = () => {
 			</div>
 
 			{/* Mobile Nav */}
-			<div className="sm:hidden flex relative">
+			<div className="md:hidden flex relative">
 				{session?.user ? (
 					<div className="flex">
 						<Image
@@ -99,6 +116,20 @@ const Nav = () => {
 									onClick={() => setToggleDropdown(false)}
 								>
 									Create Project
+								</Link>
+								<Link
+									href="/completed"
+									className="dropdown_link"
+									onClick={() => setToggleDropdown(false)}
+								>
+									Completed
+								</Link>
+								<Link
+									href="/archived"
+									className="dropdown_link"
+									onClick={() => setToggleDropdown(false)}
+								>
+									Archived
 								</Link>
 								<button
 									type="button"
